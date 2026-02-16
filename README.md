@@ -1,7 +1,17 @@
 # 🏥 Medical Information Assistant
 
 > **AI-Powered Health Product Analysis & Medical Document Intelligence**  
-> Built with **Spring Boot 3.4** · **Spring AI 1.0.0-M5** · **Azure OpenAI (GPT-5-mini)** · **MySQL** · **Angular 17** · **Bootstrap 5**
+> Built with **Spring Boot 3.4** · **Spring AI 1.0.0-M5** · **Groq AI (Llama 3.3 70B)** · **MySQL** · **Angular 17** · **Bootstrap 5**
+
+## 🌐 Live Demo
+
+| | Link |
+|---|---|
+| 🖥️ **Frontend** | [https://your-app.vercel.app](https://your-app.vercel.app) |
+| ⚙️ **Backend API** | [https://medical-assistant-api.onrender.com](https://medical-assistant-api.onrender.com) |
+| 📦 **GitHub Repo** | [https://github.com/riteshkumar-0/Medical_health_assist](https://github.com/riteshkumar-0/Medical_health_assist) |
+
+> ⚠️ **Note:** The backend is hosted on Render's free tier and may take ~30-50 seconds to wake up on the first request.
 
 ---
 
@@ -26,7 +36,7 @@
 
 ## 📖 Project Overview
 
-The **Medical Information Assistant** is a full-stack application that leverages **Spring AI** to showcase core AI capabilities including **prompt engineering**, **structured output**, and **PDF document processing**. It provides an interactive dashboard for analyzing health monitoring products, comparing them side-by-side, summarizing medical documents, and generating AI-driven health insights — all powered by **Azure OpenAI GPT-5-mini**.
+The **Medical Information Assistant** is a full-stack application that leverages **Spring AI** to showcase core AI capabilities including **prompt engineering**, **structured output**, and **PDF document processing**. It provides an interactive dashboard for analyzing health monitoring products, comparing them side-by-side, summarizing medical documents, and generating AI-driven health insights — all powered by **Groq AI (Llama 3.3 70B)**.
 
 ---
 
@@ -184,7 +194,7 @@ Medical Information Assistant/
 2. Backend fetches product details from MySQL
 3. Loads the `product-analysis` template from `prompts.yml`
 4. Injects product data into placeholders dynamically
-5. Sends resolved prompt to Azure OpenAI GPT-5-mini
+5. Sends resolved prompt to Groq AI (Llama 3.3 70B)
 6. Returns structured `ProductAnalysisResponse` to the frontend
 
 ---
@@ -334,17 +344,18 @@ Centralized YAML repository containing **9 reusable prompt templates**:
 | Layer | Technology | Version |
 |-------|-----------|---------|
 | **Backend Framework** | Spring Boot | 3.4.1 |
-| **AI Framework** | Spring AI (Azure OpenAI Starter) | 1.0.0-M5 |
-| **AI Model** | Azure OpenAI GPT-5-mini | Latest |
+| **AI Framework** | Spring AI (OpenAI Starter) | 1.0.0-M5 |
+| **AI Model** | Groq AI — Llama 3.3 70B Versatile | Latest |
 | **PDF Processing** | Spring AI `PagePdfDocumentReader` | 1.0.0-M5 |
 | **Database** | MySQL | 8.0+ |
 | **ORM** | Spring Data JPA / Hibernate | 6.x |
-| **Java** | JDK | 17+ |
+| **Java** | JDK | 21 |
 | **Build Tool** | Apache Maven | 3.8+ |
 | **Frontend Framework** | Angular | 17.3 |
 | **CSS Framework** | Bootstrap + Bootstrap Icons | 5.3.3 |
 | **HTTP Client** | Angular HttpClient + RxJS | 7.8 |
 | **Code Utilities** | Lombok | Latest |
+| **Deployment** | Vercel (Frontend) · Render (Backend) · Aiven (MySQL) | Free Tier |
 
 ---
 
@@ -352,12 +363,12 @@ Centralized YAML repository containing **9 reusable prompt templates**:
 
 Before running the application, ensure you have:
 
-- [x] **Java 17+** installed (`java -version`)
+- [x] **Java 21+** installed (`java -version`)
 - [x] **Maven 3.8+** installed (`mvn -version`)
 - [x] **Node.js 18+** and **npm** installed (`node -v && npm -v`)
 - [x] **Angular CLI** installed globally (`npm install -g @angular/cli`)
 - [x] **MySQL 8.0+** running on `localhost:3306`
-- [x] **Azure OpenAI** subscription with a deployed **GPT-5-mini** model
+- [x] **Groq API Key** (free at [console.groq.com](https://console.groq.com))
 
 ---
 
@@ -370,20 +381,13 @@ Open the `Medical Information Assistant` folder in your IDE or terminal.
 ### Step 2: Set Environment Variables
 
 ```bash
-# Windows (Command Prompt)
-set AZURE_OPENAI_KEY=your-azure-openai-api-key
-set AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
-set DEPLOYMENT_NAME=gpt-5-mini
+# Linux / macOS
+export GROQ_API_KEY=your-groq-api-key
+export DB_PASSWORD=root@1234
 
 # Windows (PowerShell)
-$env:AZURE_OPENAI_KEY="your-azure-openai-api-key"
-$env:AZURE_OPENAI_ENDPOINT="https://your-resource-name.openai.azure.com/"
-$env:DEPLOYMENT_NAME="gpt-5-mini"
-
-# Linux / macOS
-export AZURE_OPENAI_KEY=your-azure-openai-api-key
-export AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
-export DEPLOYMENT_NAME=gpt-5-mini
+$env:GROQ_API_KEY="your-groq-api-key"
+$env:DB_PASSWORD="root@1234"
 ```
 
 ### Step 3: Setup MySQL Database
@@ -394,7 +398,7 @@ export DEPLOYMENT_NAME=gpt-5-mini
 CREATE DATABASE medical_assistant_db;
 ```
 
-> **Note:** Default credentials in `application.properties` are `root/root`. Update as needed.
+> **Note:** Default credentials in `application.properties` are `root/root@1234`. Update as needed.
 
 ### Step 4: Run the Backend
 
@@ -427,9 +431,12 @@ Navigate to **http://localhost:4200** in your browser.
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `AZURE_OPENAI_KEY` | Azure OpenAI API key | `abc123...` |
-| `AZURE_OPENAI_ENDPOINT` | Azure OpenAI endpoint URL | `https://myresource.openai.azure.com/` |
-| `DEPLOYMENT_NAME` | Azure OpenAI model deployment name | `gpt-5-mini` |
+| `GROQ_API_KEY` | Groq API key (free at console.groq.com) | `gsk_abc123...` |
+| `DB_PASSWORD` | MySQL database password | `root@1234` |
+| `DATABASE_URL` | Production MySQL JDBC URL (Render only) | `jdbc:mysql://host:port/db` |
+| `DATABASE_USERNAME` | Production MySQL username (Render only) | `avnadmin` |
+| `DATABASE_PASSWORD` | Production MySQL password (Render only) | `...` |
+| `CORS_ORIGIN` | Allowed frontend origin (Render only) | `https://your-app.vercel.app` |
 
 ---
 
@@ -451,4 +458,4 @@ Navigate to **http://localhost:4200** in your browser.
 
 ---
 
-*Built with ❤️ using Spring AI and Azure OpenAI*
+*Built with ❤️ using Spring AI and Groq AI*
