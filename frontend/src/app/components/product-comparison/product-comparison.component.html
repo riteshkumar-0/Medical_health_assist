@@ -1,0 +1,111 @@
+<div class="container py-4">
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <h2 class="fw-bold">
+      <i class="bi bi-arrow-left-right text-success me-2"></i>Product Comparison
+    </h2>
+    <p class="text-muted">Compare health monitoring products using the centralized AI prompt library with multiple template patterns.</p>
+  </div>
+
+  <!-- Comparison Form -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+      <h5 class="card-title fw-bold mb-4">
+        <i class="bi bi-sliders me-2 text-secondary"></i>Configure Comparison
+      </h5>
+
+      <!-- Mode Toggle -->
+      <div class="btn-group mb-4 w-100" role="group">
+        <button type="button" class="btn btn-lg"
+                [class]="comparisonMode === 'products' ? 'btn-success' : 'btn-outline-success'"
+                (click)="comparisonMode = 'products'">
+          <i class="bi bi-box-seam me-1"></i> Compare Two Products
+        </button>
+        <button type="button" class="btn btn-lg"
+                [class]="comparisonMode === 'category' ? 'btn-success' : 'btn-outline-success'"
+                (click)="comparisonMode = 'category'">
+          <i class="bi bi-tags me-1"></i> Compare By Category
+        </button>
+      </div>
+
+      <!-- Product vs Product -->
+      <div *ngIf="comparisonMode === 'products'" class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Product A</label>
+          <select class="form-select" [(ngModel)]="productIdA">
+            <option value="">-- Select Product A --</option>
+            <option *ngFor="let product of products" [value]="product.productId">
+              {{ product.productName }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Product B</label>
+          <select class="form-select" [(ngModel)]="productIdB">
+            <option value="">-- Select Product B --</option>
+            <option *ngFor="let product of products" [value]="product.productId">
+              {{ product.productName }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Comparison Type</label>
+          <select class="form-select" [(ngModel)]="comparisonType">
+            <option value="detailed">Detailed Comparison</option>
+            <option value="quick">Quick Comparison</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Category Comparison -->
+      <div *ngIf="comparisonMode === 'category'" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Select Category</label>
+          <select class="form-select" [(ngModel)]="selectedCategory">
+            <option value="">-- Select Category --</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="mt-4">
+        <button class="btn btn-success btn-lg px-5" (click)="compareProducts()" [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!loading" class="bi bi-cpu me-2"></i>
+          {{ loading ? 'Comparing...' : 'Compare' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-danger d-flex align-items-center">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;"></div>
+    <p class="mt-3 text-muted">AI is comparing products... This may take a moment.</p>
+  </div>
+
+  <!-- Result -->
+  <div *ngIf="comparisonResult" class="card border-0 shadow-sm result-card">
+    <div class="card-header bg-success bg-opacity-10 border-0 py-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold text-success">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          {{ comparisonResult.productAName }} vs {{ comparisonResult.productBName }}
+        </h5>
+        <div>
+          <span class="badge bg-info me-2">{{ comparisonResult.comparisonType }}</span>
+          <span class="badge bg-secondary">Template: {{ comparisonResult.templateUsed }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-4">
+      <div class="comparison-content" [innerHTML]="comparisonResult.comparison | formatMarkdown"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<footer class="footer">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Brand Column -->
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <h5 class="fw-bold mb-2">
+            <i class="bi bi-heart-pulse-fill text-info me-2"></i>Medical Info Assistant
+          </h5>
+          <p class="text-muted small mb-3">
+            AI-Powered Health Product Analysis & Medical Document Intelligence platform built with Spring AI and Azure OpenAI.
+          </p>
+          <div class="tech-badges d-flex flex-wrap gap-1">
+            <span class="badge bg-primary bg-opacity-10 text-primary">Spring Boot</span>
+            <span class="badge bg-success bg-opacity-10 text-success">Spring AI</span>
+            <span class="badge bg-info bg-opacity-10 text-info">Angular 17</span>
+            <span class="badge bg-danger bg-opacity-10 text-danger">Azure OpenAI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Column -->
+      <div class="col-lg-4 col-md-6">
+        <h6 class="footer-heading">
+          <i class="bi bi-lightning-fill text-warning me-1"></i>Features
+        </h6>
+        <ul class="footer-links">
+          <li><a routerLink="/analysis"><i class="bi bi-search me-2"></i>Product Analysis</a></li>
+          <li><a routerLink="/comparison"><i class="bi bi-arrow-left-right me-2"></i>Product Comparison</a></li>
+          <li><a routerLink="/pdf-summarizer"><i class="bi bi-file-earmark-pdf me-2"></i>PDF Summarizer</a></li>
+          <li><a routerLink="/health-insights"><i class="bi bi-lightbulb me-2"></i>Health Insights</a></li>
+        </ul>
+      </div>
+
+      <!-- Tech & Info Column -->
+      <div class="col-lg-4 col-md-12">
+        <h6 class="footer-heading">
+          <i class="bi bi-gear-fill text-secondary me-1"></i>Tech Stack
+        </h6>
+        <div class="tech-list">
+          <div class="tech-item">
+            <i class="bi bi-server text-primary me-2"></i>
+            <span>Spring Boot 3.4 + Spring AI 1.0</span>
+          </div>
+          <div class="tech-item">
+            <i class="bi bi-gpu-card text-success me-2"></i>
+            <span>Azure OpenAI (GPT-5-mini)</span>
+          </div>
+          <div class="tech-item">
+            <i class="bi bi-window-stack text-info me-2"></i>
+            <span>Angular 17 + Bootstrap 5</span>
+          </div>
+          <div class="tech-item">
+            <i class="bi bi-database text-warning me-2"></i>
+            <span>MySQL 8 + Spring Data JPA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="footer-divider">
+
+    <!-- Bottom Row -->
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p class="text-muted small mb-md-0 mb-2">
+          &copy; {{ currentYear }} Medical Information Assistant. Built with <i class="bi bi-heart-fill text-danger"></i> by <strong>Ritesh Kumar</strong>
+        </p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <span class="badge bg-dark bg-opacity-75 me-1">
+          <i class="bi bi-robot me-1"></i>AI Powered
+        </span>
+        <span class="badge bg-primary bg-opacity-75 me-1">
+          <i class="bi bi-shield-check me-1"></i>Spring AI
+        </span>
+        <span class="badge bg-success bg-opacity-75">
+          <i class="bi bi-cloud me-1"></i>Azure OpenAI
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>

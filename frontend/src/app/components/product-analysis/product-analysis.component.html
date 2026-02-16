@@ -1,0 +1,102 @@
+<div class="container py-4">
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <h2 class="fw-bold">
+      <i class="bi bi-search text-primary me-2"></i>Product Analysis
+    </h2>
+    <p class="text-muted">Analyze health monitoring products using AI-powered prompt templates with dynamic parameter injection.</p>
+  </div>
+
+  <!-- Analysis Form -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+      <h5 class="card-title fw-bold mb-4">
+        <i class="bi bi-gear me-2 text-secondary"></i>Configure Analysis
+      </h5>
+
+      <div class="row g-3">
+        <!-- Product Selection -->
+        <div class="col-md-5">
+          <label class="form-label fw-semibold">Select Product</label>
+          <select class="form-select form-select-lg" [(ngModel)]="selectedProductId"
+                  [disabled]="loadingProducts">
+            <option value="">-- Choose a product --</option>
+            <option *ngFor="let product of products" [value]="product.productId">
+              {{ product.productName }} ({{ product.productId }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Analysis Type -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Analysis Type</label>
+          <select class="form-select form-select-lg" [(ngModel)]="analysisType">
+            <option value="detailed">Detailed Analysis</option>
+            <option value="brief">Brief Analysis</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-primary btn-lg w-100" (click)="analyzeProduct()"
+                  [disabled]="loading || !selectedProductId">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            <i *ngIf="!loading" class="bi bi-cpu me-2"></i>
+            {{ loading ? 'Analyzing...' : 'Analyze' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Product Info -->
+  <div *ngIf="getSelectedProduct() as product" class="card border-0 shadow-sm mb-4 border-start border-primary border-4">
+    <div class="card-body p-4">
+      <h5 class="fw-bold mb-3">
+        <i class="bi bi-info-circle me-2 text-primary"></i>{{ product.productName }}
+      </h5>
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Product ID:</strong> {{ product.productId }}</p>
+          <p><strong>Category:</strong> <span class="badge bg-primary">{{ product.category }}</span></p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Description:</strong> {{ product.description }}</p>
+        </div>
+      </div>
+      <div class="mt-2">
+        <strong>Key Features:</strong>
+        <div class="d-flex flex-wrap gap-1 mt-1">
+          <span *ngFor="let feature of product.keyFeatures.split(',')"
+                class="badge bg-light text-dark border">{{ feature.trim() }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-danger d-flex align-items-center">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+    <p class="mt-3 text-muted">AI is analyzing the product... This may take a moment.</p>
+  </div>
+
+  <!-- Analysis Result -->
+  <div *ngIf="analysisResult" class="card border-0 shadow-sm result-card">
+    <div class="card-header bg-success bg-opacity-10 border-0 py-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold text-success">
+          <i class="bi bi-check-circle-fill me-2"></i>Analysis Result
+        </h5>
+        <span class="badge bg-secondary">Template: {{ analysisResult.templateUsed }}</span>
+      </div>
+    </div>
+    <div class="card-body p-4">
+      <div class="analysis-content" [innerHTML]="analysisResult.analysis | formatMarkdown"></div>
+    </div>
+  </div>
+</div>

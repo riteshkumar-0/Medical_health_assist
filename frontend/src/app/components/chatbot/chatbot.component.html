@@ -1,0 +1,73 @@
+<!-- Floating Help Button -->
+<button class="help-btn" [class.active]="isOpen" (click)="toggleChat()" title="Chat with AI Assistant">
+  <i class="bi" [ngClass]="isOpen ? 'bi-x-lg' : 'bi-chat-dots-fill'"></i>
+</button>
+
+<!-- Overlay -->
+<div class="chat-overlay" [class.visible]="isOpen" (click)="closeChat()"></div>
+
+<!-- Right Side Chat Panel -->
+<div class="chat-panel" [class.open]="isOpen">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-info">
+      <div class="bot-avatar">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div>
+        <h6 class="mb-0">Medical AI Assistant</h6>
+        <small class="text-white-50">Powered by Spring AI</small>
+      </div>
+    </div>
+    <button class="btn-close-chat" (click)="closeChat()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Chat Body -->
+  <div class="chat-body">
+    <!-- Messages -->
+    <div *ngFor="let msg of messages" class="message-row" [ngClass]="msg.sender">
+      <!-- Bot avatar -->
+      <div *ngIf="msg.sender === 'bot'" class="msg-avatar">
+        <i class="bi bi-robot"></i>
+      </div>
+
+      <div class="message-bubble" [ngClass]="msg.sender">
+        <div class="msg-text">{{ msg.text }}</div>
+        <div class="msg-time">{{ msg.timestamp | date:'shortTime' }}</div>
+      </div>
+
+      <!-- User avatar -->
+      <div *ngIf="msg.sender === 'user'" class="msg-avatar user-avatar">
+        <i class="bi bi-person-fill"></i>
+      </div>
+    </div>
+
+    <!-- Typing indicator -->
+    <div *ngIf="isLoading" class="message-row bot">
+      <div class="msg-avatar">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div class="message-bubble bot typing">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="chat-input">
+    <textarea
+      #chatInput
+      class="chat-text-input"
+      [(ngModel)]="userMessage"
+      placeholder="Tell me your problems..."
+      (keydown)="onKeyDown($event)"
+      (input)="autoResize($event)"
+      [disabled]="isLoading"
+      rows="1"></textarea>
+    <button class="send-btn" (click)="sendMessage()" [disabled]="!userMessage.trim() || isLoading">
+      <i class="bi bi-send-fill"></i>
+    </button>
+  </div>
+</div>

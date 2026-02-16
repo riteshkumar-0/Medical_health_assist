@@ -1,0 +1,19 @@
+.nav-link.active {
+  font-weight: 600;
+  border-bottom: 2px solid #fff;
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px;
+  margin: 0 2px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+}
