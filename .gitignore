@@ -8,9 +8,7 @@ backend/*.war
 backend/*.class
 
 # Maven
-backend/mvnw
-backend/mvnw.cmd
-backend/.mvn/wrapper/
+# (mvnw and wrapper tracked for portability)
 
 # IDE - IntelliJ
 .idea/
@@ -52,7 +50,10 @@ yarn-error.log*
 # ========================
 # Environment & Secrets
 # ========================
+.env
+.env.*
 *.env
+!.env.example
 .env.local
 .env.*.local
 

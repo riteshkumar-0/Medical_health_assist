@@ -5,14 +5,19 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: DATABASE_URL
-        sync: false
-      - key: DATABASE_USERNAME
-        sync: false
-      - key: DATABASE_PASSWORD
-        sync: false
-      - key: GROQ_API_KEY
+        fromDatabase:
+          name: medical-assistant-db
+          property: connectionString
+      - key: GOOGLE_API_KEY
         sync: false
       - key: CORS_ORIGIN
-        sync: false
+        value: https://medical-health-assist.vercel.app,https://*.vercel.app,http://localhost:4200
+
+databases:
+  - name: medical-assistant-db
+    databaseName: medical_assistant_db
+    user: postgres
+    plan: free

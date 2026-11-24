@@ -1,12 +1,8 @@
 -- ============================================================
--- Medical Information Assistant - Database Schema & Sample Data
+-- Medical Information Assistant - Database Schema & Sample Data (PostgreSQL)
 -- ============================================================
 
--- Step 1: Create the database
-CREATE DATABASE IF NOT EXISTS medical_assistant_db;
-USE medical_assistant_db;
-
--- Step 2: Create the products table
+-- Step 1: Create the products table
 CREATE TABLE IF NOT EXISTS products (
     product_id   VARCHAR(10)  NOT NULL PRIMARY KEY,
     product_name VARCHAR(150) NOT NULL,
@@ -15,7 +11,7 @@ CREATE TABLE IF NOT EXISTS products (
     key_features TEXT
 );
 
--- Step 3: Insert sample health monitoring product data (6 products, 5 categories)
+-- Step 2: Insert sample health monitoring product data (6 products, 5 categories)
 INSERT INTO products (product_id, product_name, description, category, key_features) VALUES
 
 ('HM-001', 'VitalSign Pro Monitor',
@@ -46,7 +42,8 @@ INSERT INTO products (product_id, product_name, description, category, key_featu
 ('HM-006', 'NeuroFocus EEG Headband',
  'A consumer-friendly EEG headband that monitors brain wave activity to assess focus, stress, and cognitive performance. Used for meditation guidance, neurofeedback training, and cognitive health tracking.',
  'Neurological Monitoring',
- '4-channel EEG sensor array, Real-time brainwave analysis, Focus and attention scoring, Stress level monitoring, Guided meditation modes, Neurofeedback training programs, Bluetooth 5.0, Companion mobile app, 10-hour battery life, Lightweight ergonomic design');
+ '4-channel EEG sensor array, Real-time brainwave analysis, Focus and attention scoring, Stress level monitoring, Guided meditation modes, Neurofeedback training programs, Bluetooth 5.0, Companion mobile app, 10-hour battery life, Lightweight ergonomic design')
+ON CONFLICT (product_id) DO NOTHING;
 
 -- ============================================================
 -- Table Schema Summary
