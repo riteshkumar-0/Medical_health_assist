@@ -1,6 +1,7 @@
 <!-- Floating Help Button -->
-<button class="help-btn" [class.active]="isOpen" (click)="toggleChat()" title="Chat with AI Assistant">
+<button class="help-btn" [class.active]="isOpen" (click)="toggleChat()" title="Chat with AI Assistant" aria-label="Toggle AI Assistant Chat">
   <i class="bi" [ngClass]="isOpen ? 'bi-x-lg' : 'bi-chat-dots-fill'"></i>
+  <span class="btn-pulse" *ngIf="!isOpen"></span>
 </button>
 
 <!-- Overlay -->
@@ -16,10 +17,10 @@
       </div>
       <div>
         <h6 class="mb-0">Medical AI Assistant</h6>
-        <small class="text-white-50">Powered by Spring AI</small>
+        <small class="header-status"><span class="status-dot"></span> Online &bull; Gemini AI</small>
       </div>
     </div>
-    <button class="btn-close-chat" (click)="closeChat()">
+    <button class="btn-close-chat" (click)="closeChat()" aria-label="Close chat">
       <i class="bi bi-x-lg"></i>
     </button>
   </div>
@@ -55,19 +56,34 @@
     </div>
   </div>
 
-  <!-- Input Area -->
-  <div class="chat-input">
-    <textarea
-      #chatInput
-      class="chat-text-input"
-      [(ngModel)]="userMessage"
-      placeholder="Tell me your problems..."
-      (keydown)="onKeyDown($event)"
-      (input)="autoResize($event)"
-      [disabled]="isLoading"
-      rows="1"></textarea>
-    <button class="send-btn" (click)="sendMessage()" [disabled]="!userMessage.trim() || isLoading">
-      <i class="bi bi-send-fill"></i>
-    </button>
+  <!-- Interactive Quick Suggestions -->
+  <div class="chat-suggestions-bar" *ngIf="messages.length <= 3 && !isLoading">
+    <div class="suggestions-scroll">
+      <button
+        *ngFor="let s of suggestions"
+        type="button"
+        class="suggestion-pill"
+        (click)="sendSuggested(s.text)">
+        {{ s.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Input Area (Fixed and always visible on mobile) -->
+  <div class="chat-input-wrapper">
+    <div class="chat-input">
+      <textarea
+        #chatInput
+        class="chat-text-input"
+        [(ngModel)]="userMessage"
+        placeholder="Type a message or question..."
+        (keydown)="onKeyDown($event)"
+        (input)="autoResize($event)"
+        [disabled]="isLoading"
+        rows="1"></textarea>
+      <button class="send-btn" (click)="sendMessage()" [disabled]="!userMessage.trim() || isLoading" aria-label="Send message">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
   </div>
 </div>

@@ -19,6 +19,13 @@ export class ChatbotComponent implements OnInit {
   isLoading = false;
   sessionId: string | null = null;
 
+  suggestions = [
+    { label: '🩺 VitalSign Monitor', text: 'Tell me about the VitalSign Pro Monitor' },
+    { label: '🩸 Glucose Monitor', text: 'How does the GlucoTrack CGM work?' },
+    { label: '❤️ Smart ECG', text: 'What are the features of CardioRhythm Smart ECG?' },
+    { label: '💤 Sleep Tracker', text: 'Explain the SleepWell Analytics Band' }
+  ];
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -89,6 +96,12 @@ export class ChatbotComponent implements OnInit {
       event.preventDefault();
       this.sendMessage();
     }
+  }
+
+  sendSuggested(text: string): void {
+    if (this.isLoading) return;
+    this.userMessage = text;
+    this.sendMessage();
   }
 
   autoResize(event: Event): void {
