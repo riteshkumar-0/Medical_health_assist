@@ -8,7 +8,7 @@
 | | Link |
 |---|---|
 | 🖥️ **Frontend** | [https://medical-health-assist.vercel.app](https://medical-health-assist.vercel.app) |
-| ⚙️ **Backend API** | [https://medical-health-assist.onrender.com](https://medical-health-assist.onrender.com) |
+| ⚙️ **Backend API** | [https://medical-assistant-api-jqvw.onrender.com](https://medical-assistant-api-jqvw.onrender.com) |
 | 📦 **GitHub Repo** | [https://github.com/riteshkumar-0/Medical_health_assist](https://github.com/riteshkumar-0/Medical_health_assist) |
 
 > ⚠️ **Note:** The backend is hosted on Render's free tier and may take ~30-50 seconds to wake up on the first request.
