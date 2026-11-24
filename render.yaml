@@ -19,5 +19,5 @@ services:
 databases:
   - name: medical-assistant-db
     databaseName: medical_assistant_db
-    user: postgres
+    user: medical_user
     plan: free
